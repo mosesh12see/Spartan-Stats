@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spartan Stats Dashboard</title>
+    <link rel="icon" type="image/png" sizes="180x180" href="spartan-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="spartan-icon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -392,5 +394,69 @@
         updateRefreshInfo();
         setInterval(updateRefreshInfo, 1000);
     </script>
+
+    <!-- METHODOLOGY SECTION -->
+    <div style="background: white; border-radius: 13px; padding: 30px; margin-top: 30px; box-shadow: 0 9px 22px rgba(0,0,0,0.2);">
+        <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.8em; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            📊 Methodology & Definitions
+        </h2>
+
+        <div style="line-height: 1.8; color: #2c3e50;">
+            <h3 style="color: #764ba2; margin-top: 20px; margin-bottom: 10px;">What is Spartan Stats Dashboard?</h3>
+            <p style="margin-bottom: 15px;">
+                The <strong>Spartan Stats Dashboard</strong> tracks appointment and performance metrics for Spartan operations,
+                providing real-time visibility into call center performance, appointment setting, and team metrics.
+            </p>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">⚠️ IMPORTANT: Data Exclusions</h3>
+            <div style="background: #fff5f5; padding: 20px; border-left: 4px solid #e74c3c; margin: 15px 0;">
+                <p style="margin: 5px 0; font-weight: bold; color: #e74c3c;">The following appointments are EXCLUDED from all statistics:</p>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li><strong>Kentucky (KY) Appointments:</strong> All appointments in Kentucky state</li>
+                    <li><strong>Missouri (MO) Appointments:</strong> All appointments in Missouri state</li>
+                </ul>
+                <p style="margin-top: 15px; font-style: italic;">
+                    <strong>Reason:</strong> KY and MO appointments are tracked separately or excluded from standard
+                    Spartan performance metrics based on operational requirements.
+                </p>
+            </div>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Key Metrics Explained</h3>
+            <ul style="margin-left: 25px; margin-bottom: 15px;">
+                <li><strong>Total Appointments:</strong> All scheduled appointments (excluding KY and MO)</li>
+                <li><strong>Appointments by State:</strong> Geographic breakdown of appointment distribution</li>
+                <li><strong>Call Volume:</strong> Number of outbound calls made</li>
+                <li><strong>Contact Rate:</strong> Percentage of calls that result in contact with prospect</li>
+                <li><strong>Set Rate:</strong> Percentage of contacts that result in appointments</li>
+                <li><strong>Team Performance:</strong> Individual and team-level metrics</li>
+            </ul>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Calculation Methods</h3>
+            <ul style="margin-left: 25px; margin-bottom: 15px;">
+                <li><strong>Contact Rate:</strong> <code>(Total Contacts / Total Calls) × 100</code></li>
+                <li><strong>Set Rate:</strong> <code>(Total Appointments Set / Total Contacts) × 100</code></li>
+                <li><strong>Daily/Weekly Totals:</strong> Metrics aggregated by date ranges</li>
+                <li><strong>State Filtering:</strong> KY and MO excluded during data processing before calculations</li>
+            </ul>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Source</h3>
+            <p style="margin-bottom: 15px;">
+                Data is sourced from call center systems and CRM platforms. The KY and MO exclusion logic
+                is applied during data processing (see <code>generate_spartan_dashboard.py</code> line 231)
+                to ensure accurate representation of target state performance.
+            </p>
+
+            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Update Schedule</h3>
+            <p style="margin-bottom: 15px;">
+                This dashboard is automatically updated hourly from 8am to 8pm via cron job.
+                Metrics reflect real-time or near-real-time data as of the last update.
+            </p>
+
+            <p style="margin-top: 25px; font-size: 0.9em; color: #666; font-style: italic;">
+                For detailed technical documentation, see <code>README.md</code> and <code>generate_spartan_dashboard.py</code> (line 231 for exclusion logic) in the project folder.
+            </p>
+        </div>
+    </div>
+
 </body>
 </html>
