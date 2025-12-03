@@ -3,73 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3600">
     <title>Spartan Stats Dashboard</title>
-    <link rel="icon" type="image/png" sizes="180x180" href="spartan-icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="spartan-icon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d1515 50%, #1a0505 100%);
             min-height: 100vh;
             padding: 20px;
             color: #fff;
             font-size: 13px;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1400px; margin: 0 auto; }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
+        .header { text-align: center; margin-bottom: 30px; }
         .header h1 {
             font-size: 2.2em;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #c41e3a 0%, #d4af37 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        .header p { font-size: 1em; opacity: 0.8; }
 
-        .header p {
-            font-size: 1em;
-            opacity: 0.8;
-        }
-
-        .last-updated {
-            text-align: center;
-            opacity: 0.6;
-            margin-bottom: 20px;
-            font-size: 0.85em;
-        }
+        .last-updated { text-align: center; opacity: 0.6; margin-bottom: 20px; font-size: 0.85em; }
 
         .managers-box {
-            background: rgba(102, 126, 234, 0.2);
-            border: 2px solid #667eea;
+            background: rgba(196, 30, 58, 0.2);
+            border: 2px solid #c41e3a;
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 30px;
             text-align: center;
         }
-
-        .managers-box h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-
+        .managers-box h3 { color: #d4af37; margin-bottom: 15px; }
         .manager-badge {
             display: inline-block;
-            background: #667eea;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
             padding: 8px 16px;
             border-radius: 20px;
             margin: 5px;
             font-weight: bold;
+            border: 1px solid #d4af37;
         }
 
         .stats-grid {
@@ -87,45 +66,23 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .stat-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 15px 40px rgba(196, 30, 58, 0.5);
         }
-
         .stat-card h2 {
             font-size: 1.4em;
             margin-bottom: 15px;
-            color: #667eea;
-            border-bottom: 2px solid #667eea;
+            color: #d4af37;
+            border-bottom: 2px solid #c41e3a;
             padding-bottom: 10px;
         }
 
-        .metric {
-            margin: 12px 0;
-        }
-
-        .metric-label {
-            font-size: 0.8em;
-            opacity: 0.7;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
-
-        .metric-value {
-            font-size: 1.6em;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .metric-value.percentage {
-            color: #4ade80;
-        }
-
-        .metric-value.money {
-            color: #fbbf24;
-        }
+        .metric { margin: 12px 0; }
+        .metric-label { font-size: 0.8em; opacity: 0.7; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.8px; }
+        .metric-value { font-size: 1.6em; font-weight: bold; color: #fff; }
+        .metric-value.percentage { color: #4ade80; }
+        .metric-value.money { color: #fbbf24; }
 
         .metric-row {
             display: flex;
@@ -135,65 +92,36 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.95em;
         }
-
-        .metric-row:last-child {
-            border-bottom: none;
-        }
-
-        .metric-row-label {
-            font-size: 1em;
-            opacity: 0.8;
-        }
-
-        .metric-row-value {
-            font-size: 1.1em;
-            font-weight: bold;
-        }
+        .metric-row:last-child { border-bottom: none; }
+        .metric-row-label { font-size: 1em; opacity: 0.8; }
+        .metric-row-value { font-size: 1.1em; font-weight: bold; }
 
         .summary-section {
-            background: rgba(102, 126, 234, 0.1);
-            border: 2px solid #667eea;
+            background: rgba(196, 30, 58, 0.15);
+            border: 2px solid #c41e3a;
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 25px;
         }
+        .summary-section h2 { font-size: 1.5em; margin-bottom: 18px; color: #d4af37; }
+        .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .summary-box { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px; text-align: center; }
+        .summary-box .label { font-size: 0.85em; opacity: 0.7; margin-bottom: 8px; }
+        .summary-box .value { font-size: 1.8em; font-weight: bold; color: #4ade80; }
 
-        .summary-section h2 {
-            font-size: 1.5em;
-            margin-bottom: 18px;
-            color: #667eea;
-        }
+        .footer { text-align: center; margin-top: 60px; opacity: 0.5; font-size: 0.9em; }
 
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .summary-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
+        #refreshTimer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 20px;
             border-radius: 10px;
-            text-align: center;
-        }
-
-        .summary-box .label {
-            font-size: 0.85em;
-            opacity: 0.7;
-            margin-bottom: 8px;
-        }
-
-        .summary-box .value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #4ade80;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 60px;
-            opacity: 0.5;
-            font-size: 0.9em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            min-width: 200px;
         }
     </style>
 </head>
@@ -205,12 +133,11 @@
         </div>
 
         <div class="last-updated">
-            Last Updated: November 22, 2025 at 10:02 AM<br>
-            <span style="font-size: 0.75em; opacity: 0.7; font-style: italic;">cron job: hourly from 8am to 8pm daily | last ran: november 22, 2025 at 10:02 am</span>
+            Last Updated: December 03, 2025 at 01:06 PM<br>
+            <span style="font-size: 0.75em; opacity: 0.7; font-style: italic;">cron job: hourly from 8am to 8pm daily | last ran: december 03, 2025 at 01:06 pm</span>
         </div>
 
-        <!-- Fixed floating refresh timer -->
-        <div id="refreshTimer" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.9); color: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; min-width: 200px;">
+        <div id="refreshTimer">
             <div id="nextRefresh" style="font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #fff;"></div>
             <div id="countdown" style="font-size: 14px; font-weight: 700; color: #00ff88;"></div>
         </div>
@@ -226,15 +153,15 @@
             <div class="summary-grid">
                 <div class="summary-box">
                     <div class="label">YTD Total Appointments</div>
-                    <div class="value">84</div>
+                    <div class="value">102</div>
                 </div>
                 <div class="summary-box">
                     <div class="label">MTD Total Appointments</div>
-                    <div class="value">59</div>
+                    <div class="value">5</div>
                 </div>
                 <div class="summary-box">
                     <div class="label">WTD Total Appointments</div>
-                    <div class="value">19</div>
+                    <div class="value">5</div>
                 </div>
             </div>
         </div>
@@ -245,31 +172,31 @@
                 <h2>📅 YTD (Year to Date)</h2>
                 <div class="metric">
                     <div class="metric-label">Sit Rate</div>
-                    <div class="metric-value percentage">62.0%</div>
+                    <div class="metric-value percentage">59.8%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">Close Rate</div>
-                    <div class="metric-value percentage">26.5%</div>
+                    <div class="metric-value percentage">27.9%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">States</div>
-                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">GA (84)</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">GA (100), KY (1), MO (1)</div>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total Appointments</span>
-                    <span class="metric-row-value">84</span>
+                    <span class="metric-row-value">102</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Sits</span>
-                    <span class="metric-row-value">49</span>
+                    <span class="metric-row-value">61</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Closed</span>
-                    <span class="metric-row-value">13</span>
+                    <span class="metric-row-value">17</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total KW</span>
-                    <span class="metric-row-value">190.07 KW</span>
+                    <span class="metric-row-value">205.91 KW</span>
                 </div>
             </div>
 
@@ -278,31 +205,31 @@
                 <h2>📆 MTD (Month to Date)</h2>
                 <div class="metric">
                     <div class="metric-label">Sit Rate</div>
-                    <div class="metric-value percentage">53.7%</div>
+                    <div class="metric-value percentage">40.0%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">Close Rate</div>
-                    <div class="metric-value percentage">20.7%</div>
+                    <div class="metric-value percentage">100.0%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">States</div>
-                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">GA (59)</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">GA (5)</div>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total Appointments</span>
-                    <span class="metric-row-value">59</span>
+                    <span class="metric-row-value">5</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Sits</span>
-                    <span class="metric-row-value">29</span>
+                    <span class="metric-row-value">2</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Closed</span>
-                    <span class="metric-row-value">6</span>
+                    <span class="metric-row-value">2</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total KW</span>
-                    <span class="metric-row-value">71.98 KW</span>
+                    <span class="metric-row-value">7.48 KW</span>
                 </div>
             </div>
 
@@ -311,54 +238,50 @@
                 <h2>📅 WTD (Week to Date)</h2>
                 <div class="metric">
                     <div class="metric-label">Sit Rate</div>
-                    <div class="metric-value percentage">50.0%</div>
+                    <div class="metric-value percentage">40.0%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">Close Rate</div>
-                    <div class="metric-value percentage">14.3%</div>
+                    <div class="metric-value percentage">100.0%</div>
                 </div>
                 <div class="metric">
                     <div class="metric-label">States</div>
-                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">GA (19)</div>
+                    <div class="metric-value" style="font-size: 1.1em; line-height: 1.5;">GA (5)</div>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total Appointments</span>
-                    <span class="metric-row-value">19</span>
+                    <span class="metric-row-value">5</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Sits</span>
-                    <span class="metric-row-value">7</span>
+                    <span class="metric-row-value">2</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Closed</span>
-                    <span class="metric-row-value">1</span>
+                    <span class="metric-row-value">2</span>
                 </div>
                 <div class="metric-row">
                     <span class="metric-row-label">Total KW</span>
-                    <span class="metric-row-value">9.68 KW</span>
+                    <span class="metric-row-value">7.48 KW</span>
                 </div>
             </div>
         </div>
 
         <div class="footer">
             <p>Spartan Stats Dashboard | Data from Podio Closer App</p>
-            <p>YTD: 2025-01-01 - 2025-11-22 | MTD: 2025-11-01 - 2025-11-22 | WTD: 2025-11-17 - 2025-11-22</p>
+            <p>YTD: 2025-01-01 - 2025-12-03 | MTD: 2025-12-01 - 2025-12-03 | WTD: 2025-12-01 - 2025-12-03</p>
             <p style="margin-top: 10px;">Tracking: John Flowers, johnflowers777@gmail.com</p>
             <p style="margin-top: 5px;">Commission: $0.59 per watt (KW × 1000 × $0.59)</p>
         </div>
     </div>
 
     <script>
-        // Next refresh calculator and countdown timer
         function updateRefreshInfo() {
             const now = new Date();
-            const cronTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; // Hourly from 8am to 8pm
-
-            // Find next refresh time
+            const cronTimes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
             let nextRefreshHour = null;
             const currentHour = now.getHours();
 
-            // Find next cron time today
             for (let hour of cronTimes) {
                 if (hour > currentHour) {
                     nextRefreshHour = hour;
@@ -366,7 +289,6 @@
                 }
             }
 
-            // If no more cron times today, use first one tomorrow
             const nextRefresh = new Date(now);
             if (nextRefreshHour === null) {
                 nextRefresh.setDate(nextRefresh.getDate() + 1);
@@ -374,89 +296,19 @@
             }
             nextRefresh.setHours(nextRefreshHour, 0, 0, 0);
 
-            // Calculate time difference
             const diff = nextRefresh - now;
             const hours = Math.floor(diff / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            // Format next refresh time
             const options = { hour: 'numeric', minute: '2-digit', hour12: true };
             const timeStr = nextRefresh.toLocaleTimeString('en-US', options);
-            const dateStr = nextRefresh.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-            // Update display
             document.getElementById('nextRefresh').textContent = `Next refresh: ${timeStr}`;
             document.getElementById('countdown').textContent = `Time until: ${hours}h ${minutes}m`;
         }
 
-        // Update immediately and then every second
         updateRefreshInfo();
         setInterval(updateRefreshInfo, 1000);
     </script>
-
-    <!-- METHODOLOGY SECTION -->
-    <div style="background: white; border-radius: 13px; padding: 30px; margin-top: 30px; box-shadow: 0 9px 22px rgba(0,0,0,0.2);">
-        <h2 style="color: #667eea; margin-bottom: 20px; font-size: 1.8em; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
-            📊 Methodology & Definitions
-        </h2>
-
-        <div style="line-height: 1.8; color: #2c3e50;">
-            <h3 style="color: #764ba2; margin-top: 20px; margin-bottom: 10px;">What is Spartan Stats Dashboard?</h3>
-            <p style="margin-bottom: 15px;">
-                The <strong>Spartan Stats Dashboard</strong> tracks appointment and performance metrics for Spartan operations,
-                providing real-time visibility into call center performance, appointment setting, and team metrics.
-            </p>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">⚠️ IMPORTANT: Data Exclusions</h3>
-            <div style="background: #fff5f5; padding: 20px; border-left: 4px solid #e74c3c; margin: 15px 0;">
-                <p style="margin: 5px 0; font-weight: bold; color: #e74c3c;">The following appointments are EXCLUDED from all statistics:</p>
-                <ul style="margin-left: 25px; margin-top: 10px;">
-                    <li><strong>Kentucky (KY) Appointments:</strong> All appointments in Kentucky state</li>
-                    <li><strong>Missouri (MO) Appointments:</strong> All appointments in Missouri state</li>
-                </ul>
-                <p style="margin-top: 15px; font-style: italic;">
-                    <strong>Reason:</strong> KY and MO appointments are tracked separately or excluded from standard
-                    Spartan performance metrics based on operational requirements.
-                </p>
-            </div>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Key Metrics Explained</h3>
-            <ul style="margin-left: 25px; margin-bottom: 15px;">
-                <li><strong>Total Appointments:</strong> All scheduled appointments (excluding KY and MO)</li>
-                <li><strong>Appointments by State:</strong> Geographic breakdown of appointment distribution</li>
-                <li><strong>Call Volume:</strong> Number of outbound calls made</li>
-                <li><strong>Contact Rate:</strong> Percentage of calls that result in contact with prospect</li>
-                <li><strong>Set Rate:</strong> Percentage of contacts that result in appointments</li>
-                <li><strong>Team Performance:</strong> Individual and team-level metrics</li>
-            </ul>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Calculation Methods</h3>
-            <ul style="margin-left: 25px; margin-bottom: 15px;">
-                <li><strong>Contact Rate:</strong> <code>(Total Contacts / Total Calls) × 100</code></li>
-                <li><strong>Set Rate:</strong> <code>(Total Appointments Set / Total Contacts) × 100</code></li>
-                <li><strong>Daily/Weekly Totals:</strong> Metrics aggregated by date ranges</li>
-                <li><strong>State Filtering:</strong> KY and MO excluded during data processing before calculations</li>
-            </ul>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Data Source</h3>
-            <p style="margin-bottom: 15px;">
-                Data is sourced from call center systems and CRM platforms. The KY and MO exclusion logic
-                is applied during data processing (see <code>generate_spartan_dashboard.py</code> line 231)
-                to ensure accurate representation of target state performance.
-            </p>
-
-            <h3 style="color: #764ba2; margin-top: 25px; margin-bottom: 10px;">Update Schedule</h3>
-            <p style="margin-bottom: 15px;">
-                This dashboard is automatically updated hourly from 8am to 8pm via cron job.
-                Metrics reflect real-time or near-real-time data as of the last update.
-            </p>
-
-            <p style="margin-top: 25px; font-size: 0.9em; color: #666; font-style: italic;">
-                For detailed technical documentation, see <code>README.md</code> and <code>generate_spartan_dashboard.py</code> (line 231 for exclusion logic) in the project folder.
-            </p>
-        </div>
-    </div>
-
 </body>
 </html>
