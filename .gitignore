@@ -12,3 +12,6 @@ secrets/
 !*.html
 !*.md
 !README.md
+*.py
+*.pyc
+__pycache__/
